@@ -11,6 +11,7 @@ import AuthScreen from './screens/AuthScreen';
 import Toast from 'react-native-toast-message';
 import EventListScreen from './screens/EventListScreen';
 import useAuthStore from './store/useAuthStore';
+import ConnectPrinterScreen from './screens/ConnectPrinterScreen';
 
 export type RootStackParamList = {
   Navigation: undefined;
@@ -42,6 +43,7 @@ const App = () => {
 export type NavigationStackParamList = {
   Auth: undefined;
   EventList: undefined;
+  ConnectPrinter: undefined;
 };
 
 const Navigation = () => {
@@ -58,15 +60,16 @@ const Navigation = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.navigate('EventList' as never);
+      router.navigate('ConnectPrinter' as never);
     }
   }, [isAuthenticated]);
 
   return (
     <Stack.Navigator
-      initialRouteName={isAuthenticated ? 'EventList' : 'Auth'}
+      initialRouteName={isAuthenticated ? 'ConnectPrinter' : 'Auth'}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Auth" component={AuthScreen} />
+      <Stack.Screen name="ConnectPrinter" component={ConnectPrinterScreen} />
       <Stack.Screen name="EventList" component={EventListScreen} />
     </Stack.Navigator>
   );

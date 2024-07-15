@@ -77,8 +77,7 @@ class PrinterModule(private val reactContext: ReactApplicationContext) : ReactCo
     fun addBeep(seconds: Int, promise: Promise){
         val durationInEighths = (seconds / 0.125).toInt()
         cpclPrinter?.addBeep(durationInEighths)
-        promise.resolve("Beep Added")
-            ?: promise.reject("NOT_CONNECTED", "Printer not connected")
+        promise.resolve("Beep Added") ?: promise.reject("NOT_CONNECTED", "Printer not connected")
     }
 
     @ReactMethod

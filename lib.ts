@@ -1,6 +1,6 @@
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 
-const { PrinterModule } = NativeModules;
+const {PrinterModule} = NativeModules;
 
 interface PrinterModuleType {
   connectBt: (macAddress: string) => Promise<string>;
@@ -8,17 +8,18 @@ interface PrinterModuleType {
   initializePrinter: (width: number, height: number) => Promise<string>;
   addText: (x: number, y: number, text: string) => Promise<string>;
   addImage: (imageUrl: string, x: number, y: number) => Promise<string>;
+  addSpeed: (speed: number) => Promise<string>;
+  addBeep: (seconds: number) => Promise<string>;
+  addPageWidth: (width: number) => Promise<string>;
   print: () => Promise<string>;
 }
 
 const PrinterModuleTyped = PrinterModule as PrinterModuleType;
 
 const connectBt = async (macAddress: string) => {
-  console.log('Connecting to:', macAddress);
   try {
-    console.log('Connecting to:', PrinterModuleTyped);
     const result = await PrinterModuleTyped.connectBt(macAddress);
-    console.log(result);
+    return result;
   } catch (e) {
     console.error(e);
   }
@@ -69,11 +70,33 @@ const print = async () => {
   }
 };
 
-export {
-  connectBt,
-  disconnect,
-  initializePrinter,
-  addText,
-  addImage,
-  print,
+type Speed = 1 | 2 | 3 | 4 | 5;
+
+const addSpeed = async (speed: Speed) => {
+  try {
+    const result = await PrinterModuleTyped.addSpeed(speed);
+    console.log(result);
+  } catch (e) {
+    console.error(e);
+  }
 };
+
+const addBeep = async (seconds: number) => {
+  try {
+    const result = await PrinterModuleTyped.addBeep(seconds);
+    console.log(result);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const addPageWidth = async (width: number) => {
+  try {
+    const result = await PrinterModuleTyped.addPageWidth(width);
+    console.log(result);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export {connectBt, disconnect, initializePrinter, addText, addImage, print, addSpeed, addBeep, addPageWidth};

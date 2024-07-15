@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import BleManager, {Peripheral} from 'react-native-ble-manager';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
-import {addImage, addText, connectBt, initializePrinter, print} from './lib';
+import {addBeep, addImage, addText, connectBt, initializePrinter, print} from './lib';
 
 const App = () => {
   const [devices, setDevices] = useState<Peripheral[]>([]);
@@ -65,14 +65,10 @@ const App = () => {
         const bluetoothConnectPermission = await check(
           PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
         );
-        const fineLocationPermission = await check(
-          PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-        );
 
         if (
           bluetoothScanPermission !== RESULTS.GRANTED ||
-          bluetoothConnectPermission !== RESULTS.GRANTED ||
-          fineLocationPermission !== RESULTS.GRANTED
+          bluetoothConnectPermission !== RESULTS.GRANTED
         ) {
           await request(PERMISSIONS.ANDROID.BLUETOOTH_SCAN);
           await request(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
@@ -81,8 +77,7 @@ const App = () => {
 
         return (
           bluetoothScanPermission === RESULTS.GRANTED &&
-          bluetoothConnectPermission === RESULTS.GRANTED &&
-          fineLocationPermission === RESULTS.GRANTED
+          bluetoothConnectPermission === RESULTS.GRANTED
         );
       } else {
         // Handle iOS permissions if necessary
@@ -206,14 +201,15 @@ const App = () => {
           }}
           onPress={async () => {
             // addText(40, 40, 'Hello Siddhant How Are you?');
-            initializePrinter(480, 1);
-            addImage(
-              'https://gkh-images.s3.amazonaws.com/3c755d5a-01f5-4291-b632-30bdd46f24cc_sample-qr.jpeg',
-              0,
-              0,
-            ).then(() => {
-              print();
-            });
+            // initializePrinter(480, 1);
+            // addImage(
+            //   'https://gkh-images.s3.amazonaws.com/3c755d5a-01f5-4291-b632-30bdd46f24cc_sample-qr.jpeg',
+            //   0,
+            //   0,
+            // ).then(() => {
+            //   print();
+            // });
+            addBeep(100);
             // print();
           }}>
           <Text style={{fontSize: 16, color: '#000', fontWeight: 'bold'}}>

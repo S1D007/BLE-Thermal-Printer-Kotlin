@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({text, onPress, loading}) => {
         marginVertical: 10,
         opacity: loading ? 0.5 : 1,
         flexDirection: 'row',
+        gap: 10,
       }}
       onPress={onPress}>
       {loading && <ActivityIndicator color={colors.darkTextColor} />}
